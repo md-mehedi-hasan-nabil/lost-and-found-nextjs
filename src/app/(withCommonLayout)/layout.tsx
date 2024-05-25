@@ -6,9 +6,9 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     return (
         <>
             <Navigation />
-            <div className='container'>
+            <>
                 {children}
-            </div>
+            </>
             <Footer />
         </>
     )

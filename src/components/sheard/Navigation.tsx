@@ -18,7 +18,7 @@ export default function Navigation() {
     return (
         <nav className='shadow-md'>
             <div className='container flex justify-between items-center py-5'>
-                <h1 className='font-bold text-lg'>LOGO</h1>
+                <Link href="/" className='font-bold text-2xl text-stone-600'>TrackReclaim</Link>
                 <div className='flex gap-6'>
                     <ul className='flex justify-end gap-6 items-center mr-6'>
                         {
