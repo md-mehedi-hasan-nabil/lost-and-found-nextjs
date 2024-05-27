@@ -11,7 +11,11 @@ const items = [
     {
         name: "About Us",
         path: "/about-us"
-    }
+    },
+    {
+        name: "Recent Posts",
+        path: "/recent-lost-item"
+    },
 ];
 
 const userItems: MenuProps['items'] = [
@@ -37,7 +41,7 @@ const userItems: MenuProps['items'] = [
 export default function Navigation() {
 
     return (
-        <nav className='shadow-md'>
+        <nav className='shadow-md sticky top-0 z-30 bg-stone-100'>
             <div className='container flex justify-between items-center py-5'>
                 <Link href="/" className='font-bold text-2xl text-stone-700'>TrackReclaim</Link>
                 <div className='flex gap-6'>
