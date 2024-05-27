@@ -1,4 +1,5 @@
 import { Button } from "antd";
+import Link from "next/link";
 
 export default function Hero() {
     return (
@@ -10,13 +11,17 @@ export default function Hero() {
 
                 <p className="text-center text-lg md:w-3/4 mx-auto">
 
-                    Welcome to the TrackReclaim, 
+                    Welcome to the TrackReclaim,
                     where lost treasures find their way back home! Whether you&apos;ve misplaced something valuable or stumbled upon a lost item, we&apos;re here to help you reconnect with what&apos;s rightfully yours.
                 </p>
 
                 <div className="flex justify-center gap-6 mt-4">
-                    <Button size="large">Report a Lost Item</Button>
-                    <Button size="large">Report a Found Item</Button>
+                    <Link href="/report-item/lost">
+                        <Button size="large">Report a Lost Item</Button>
+                    </Link>
+                    <Link href="/report-item/found">
+                        <Button size="large">Report a Found Item</Button>
+                    </Link>
                 </div>
             </div>
         </section>
