@@ -2,6 +2,8 @@ import React from 'react';
 import { Avatar, Button, Dropdown, Menu, MenuProps } from 'antd';
 import Link from 'next/link';
 import { UserOutlined } from '@ant-design/icons';
+import logo from "@/assets/logo.svg"
+import Image from 'next/image';
 
 const items = [
     {
@@ -43,7 +45,9 @@ export default function Navigation() {
     return (
         <nav className='shadow-md sticky top-0 z-30 bg-stone-100'>
             <div className='container flex justify-between items-center py-5'>
-                <Link href="/" className='font-bold text-2xl text-stone-700'>TrackReclaim</Link>
+                <Link href="/" className='font-bold text-2xl text-stone-700'>
+                    <Image src={logo} alt="logo" />
+                </Link>
                 <div className='flex gap-6'>
                     <ul className='flex justify-end gap-6 items-center mr-6'>
                         {

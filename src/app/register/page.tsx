@@ -1,40 +1,105 @@
-import { KeyOutlined, MailOutlined } from '@ant-design/icons'
-import { Button, Input } from 'antd'
-import { Metadata } from 'next'
-import Link from 'next/link'
-import React from 'react'
+"use client"
 
-export const metadata: Metadata = {
-  title: 'Register Page',
-}
+import { MailOutlined } from '@ant-design/icons'
+import { Button, Form, Input, message } from 'antd'
+import Link from 'next/link'
+import logo from "@/assets/logo.svg"
+import Image from 'next/image'
+import { IoIosInformationCircleOutline } from 'react-icons/io'
+import TextArea from 'antd/es/input/TextArea'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import Head from 'next/head'
+import { IRegister } from '@/types'
+import { IoKeyOutline, IoTimeOutline } from 'react-icons/io5'
 
 export default function RegisterPage() {
-  return (
-    <section className='flex justify-center items-center h-screen'>
-      <div>
-        <h1 className='text-3xl font-semibold mb-8'>Login to your account</h1>
-        <form className='flex flex-col gap-4'>
-          <div>
-            <Input size="large" placeholder="Name" prefix={<MailOutlined />} />
-          </div>
-          <div>
-            <Input size="large" placeholder="Email" prefix={<MailOutlined />} />
-          </div>
-          <div>
-            <Input size="large" placeholder="Password" prefix={<KeyOutlined />} />
-          </div>
-          <div>
-            <Input size="large" placeholder="Retype Password" prefix={<KeyOutlined />} />
-          </div>
+  const { control, handleSubmit } = useForm<IRegister>({
+    defaultValues: {
+      email: "",
+      password: "",
+      name: "",
+      profile: {
+      }
+    }
+  })
 
-          <div>
-            <Button className='w-full' type='primary'>Login</Button>
-          </div>
-        </form>
-        <p className='mt-3'>
-          Already have an account? Please click: <Link href="/login" className='font-bold'>Sign In</Link>
-        </p>
-      </div>
-    </section>
+  const onSubmit: SubmitHandler<IRegister> = async (data) => {
+    try {
+      console.log(data);
+      message.success('Login successful');
+    } catch (error) {
+      message.error('Login failed. Please check your credentials.');
+    }
+  }
+
+  return (
+    <>
+      <Head>
+        <title>Register Page</title>
+      </Head>
+      <section className='flex justify-center items-center h-screen'>
+        <div className='px-6'>
+          <Link href="/">
+            <Image src={logo} alt='logo' className='mx-auto mb-10' />
+          </Link>
+          <h1 className='text-xl md:text-3xl font-semibold mb-8'>Create your account</h1>
+          <Form onFinish={handleSubmit(onSubmit)} className=''>
+
+            <Form.Item name="name">
+              <Controller
+                name="name"
+                control={control}
+                render={({ field }) =>
+                  <Input {...field} type="text" size="large" placeholder="Name" prefix={<IoIosInformationCircleOutline />} />}
+              />
+            </Form.Item>
+
+            <Form.Item name="email">
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) =>
+                  <Input {...field} type="email" size="large" placeholder="Email" prefix={<MailOutlined />} />}
+              />
+            </Form.Item>
+
+            <Form.Item name="password">
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) =>
+                  <Input {...field} type="password" size="large" placeholder="Password" prefix={<IoKeyOutline />} />}
+              />
+            </Form.Item>
+
+            <Form.Item name="profile.age">
+              <Controller
+                name="profile.age"
+                control={control}
+                render={({ field }) =>
+                  <Input {...field} type="number" size="large" placeholder="Age" prefix={<IoTimeOutline />} />}
+              />
+            </Form.Item>
+            
+            <Form.Item name="profile.bio">
+              <Controller
+                name="profile.bio"
+                control={control}
+                render={({ field }) =>
+                  <TextArea {...field} rows={4} placeholder="Bio" size='large' />}
+              />
+            </Form.Item>
+
+            <div>
+              <Button htmlType='submit' className='w-full' type='primary'>Create account</Button>
+            </div>
+          </Form>
+
+          <p className='mt-3'>
+            Already have an account? Please click: <Link href="/login" className='font-bold'>Sign In</Link>
+          </p>
+        </div>
+      </section>
+    </>
   )
 }
