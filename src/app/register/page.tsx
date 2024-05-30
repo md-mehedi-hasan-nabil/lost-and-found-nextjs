@@ -11,7 +11,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import Head from 'next/head'
 import { IRegister } from '@/types'
 import { IoKeyOutline, IoTimeOutline } from 'react-icons/io5'
-import { createUser } from '@/actions/createUser'
+import { createUser } from '@/services/actions/createUser'
 import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {

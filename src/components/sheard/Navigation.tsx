@@ -1,9 +1,11 @@
-import React from 'react';
+"use client";
+
 import { Avatar, Button, Dropdown, Menu, MenuProps } from 'antd';
 import Link from 'next/link';
 import { UserOutlined } from '@ant-design/icons';
 import logo from "@/assets/logo.svg"
 import Image from 'next/image';
+import { getUserInfo } from '@/services/auth.service';
 
 const items = [
     {
@@ -25,7 +27,7 @@ const userItems: MenuProps['items'] = [
         key: '1',
         label: (
             <Link href="/profile">
-               Profile
+                Profile
             </Link>
         ),
     },
@@ -39,9 +41,9 @@ const userItems: MenuProps['items'] = [
     }
 ];
 
-
 export default function Navigation() {
-
+    const userInfo = getUserInfo()
+    console.log(userInfo)
     return (
         <nav className='shadow-md sticky top-0 z-30 bg-stone-100'>
             <div className='container flex justify-between items-center py-5'>

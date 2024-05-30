@@ -8,11 +8,52 @@ import Image from 'next/image'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import Head from 'next/head'
 import { IoKeyOutline } from 'react-icons/io5'
+import { loginUser } from '@/services/actions/loginUser'
+import { storeUserInfo } from '@/services/auth.service'
 
 interface ILoginInput {
   email: string;
   password: string;
 }
+
+
+
+
+
+
+
+
+/**
+ * 
+ * https://web.programming-hero.com/level2-batch-2-fullstack-track/video/level2-batch-2-fullstack-track-45-8-retrieve-and-decode-user-info-from-local-storage
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export default function LoginPage() {
   const { control, handleSubmit } = useForm<ILoginInput>({
@@ -24,10 +65,14 @@ export default function LoginPage() {
 
   const onSubmit: SubmitHandler<ILoginInput> = async (data) => {
     try {
-      console.log(data);
-      message.success('Login successful');
+      const result = await loginUser(data);
+
+      if (result?.success && result?.data?.token) {
+        storeUserInfo(result.data.token)
+        message.success('Login successful');
+      }
     } catch (error) {
-      message.error('Login failed. Please check your credentials.');
+      console.log(error)
     }
   }
 
