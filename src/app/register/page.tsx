@@ -11,8 +11,11 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import Head from 'next/head'
 import { IRegister } from '@/types'
 import { IoKeyOutline, IoTimeOutline } from 'react-icons/io5'
+import { createUser } from '@/actions/createUser'
+import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
+  const router = useRouter()
   const { control, handleSubmit } = useForm<IRegister>({
     defaultValues: {
       email: "",
@@ -25,10 +28,15 @@ export default function RegisterPage() {
 
   const onSubmit: SubmitHandler<IRegister> = async (data) => {
     try {
-      console.log(data);
-      message.success('Login successful');
+      const result = await createUser(data)
+
+      if (result?.success) {
+        message.success('Account create successful');
+        router.push("/login")
+      }
+
     } catch (error) {
-      message.error('Login failed. Please check your credentials.');
+      console.error(error)
     }
   }
 
@@ -80,7 +88,7 @@ export default function RegisterPage() {
                   <Input {...field} type="number" size="large" placeholder="Age" prefix={<IoTimeOutline />} />}
               />
             </Form.Item>
-            
+
             <Form.Item name="profile.bio">
               <Controller
                 name="profile.bio"
