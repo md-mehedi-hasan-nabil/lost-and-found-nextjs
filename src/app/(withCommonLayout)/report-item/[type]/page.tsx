@@ -1,6 +1,9 @@
 "use client"
 
+import CloudinaryWidget from "@/components/cloudinary/CloudinaryWidget";
+import SelectCategoryInput from "@/components/SelectCategoryInput";
 import { Button, DatePicker, Input, MenuProps, Select, TimePicker, TimePickerProps } from "antd"
+import TextArea from "antd/es/input/TextArea";
 
 export default function ReportItem({ params }: { params: { type: string } }) {
     console.log(params)
@@ -9,15 +12,14 @@ export default function ReportItem({ params }: { params: { type: string } }) {
         console.log(time, timeString);
     };
 
-    const handleChange = (value: string) => {
-        console.log(`selected ${value}`);
-    };
 
     return (
-        <section>
+        <section className="pb-14">
             <div className="container mt-10">
-                <h2 className="capitalize text-4xl font-bold">Submit {params.type} Property</h2>
-
+                <h2 className="capitalize text-3xl font-bold">Submit {params.type} Property</h2>
+                <div className="mt-8">
+                    <CloudinaryWidget />
+                </div>
                 <form className="mt-5">
                     <div className="grid grid-cols-12 gap-6 mt-4">
                         <div className="col-span-6">
@@ -30,23 +32,27 @@ export default function ReportItem({ params }: { params: { type: string } }) {
                             <DatePicker size="large" placeholder="Date Lost" onChange={onChange} className="w-full" />
                         </div>
                         <div className="col-span-6">
-                            <Select
-                                className="w-full"
-                                size="large"
-                                defaultValue="lucy"
-                                onChange={handleChange}
-                                options={[
-                                    { value: 'jack', label: 'Jack' },
-                                    { value: 'lucy', label: 'Lucy' },
-                                    { value: 'Yiminghe', label: 'yiminghe' },
-                                    { value: 'disabled', label: 'Disabled' },
-                                ]}
+                            <SelectCategoryInput />
+                        </div>
+                        <div className="col-span-12">
+                            <TextArea
+                                // value={value}
+                                // onChange={(e) => setValue(e.target.value)}
+                                placeholder="Location"
+                                autoSize={{ minRows: 3, maxRows: 5 }}
                             />
                         </div>
+                        <h2 className="col-span-12 capitalize text-3xl font-bold">Contact Information</h2>
+                        <div className="col-span-6">
+                            <Input size="large" placeholder="Enter email" className="w-full" />
+                        </div>
+                        <div className="col-span-6">
+                            <Input size="large" placeholder="Enter phone" className="w-full" />
+                        </div>
                     </div>
-
                     <Button type="primary" size="large" className="mt-5">Submit</Button>
                 </form>
+
             </div>
         </section>
     )
