@@ -15,6 +15,7 @@
     "antd": "^5.17.3",
     "jwt-decode": "^4.0.0",
     "next": "14.2.3",
+    "nextjs-toploader": "^1.6.12",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.5",

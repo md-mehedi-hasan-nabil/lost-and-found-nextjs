@@ -10,52 +10,15 @@ import Head from 'next/head'
 import { IoKeyOutline } from 'react-icons/io5'
 import { loginUser } from '@/services/actions/loginUser'
 import { storeUserInfo } from '@/services/auth.service'
+import { useRouter } from 'next/navigation'
 
 interface ILoginInput {
   email: string;
   password: string;
 }
 
-
-
-
-
-
-
-
-/**
- * 
- * https://web.programming-hero.com/level2-batch-2-fullstack-track/video/level2-batch-2-fullstack-track-45-8-retrieve-and-decode-user-info-from-local-storage
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export default function LoginPage() {
+  const router = useRouter()
   const { control, handleSubmit } = useForm<ILoginInput>({
     defaultValues: {
       email: "",
@@ -70,6 +33,7 @@ export default function LoginPage() {
       if (result?.success && result?.data?.token) {
         storeUserInfo(result.data.token)
         message.success('Login successful');
+        router.push("/")
       }
     } catch (error) {
       console.log(error)

@@ -9,5 +9,13 @@ export function getFromLocalStorage(key: string) {
         return null;
     }
 
-    return localStorage.getItem("accessToken");
+    return localStorage.getItem(key);
+}
+
+export function removeFromLocalStorage(key: string) {
+    if (typeof window === "undefined" || !key) {
+        return null;
+    }
+
+    return localStorage.removeItem(key);
 }
