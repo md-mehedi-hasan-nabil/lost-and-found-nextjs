@@ -1,17 +1,36 @@
 "use client"
 
-import CloudinaryWidget from "@/components/cloudinary/CloudinaryWidget";
+import { Form, Input, Button } from "antd";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import ReactHookInput from "@/components/form/ReactHookInput";
 import SelectCategoryInput from "@/components/SelectCategoryInput";
-import { Button, DatePicker, Input, MenuProps, Select, TimePicker, TimePickerProps } from "antd"
+import CloudinaryWidget from "@/components/cloudinary/CloudinaryWidget";
 import TextArea from "antd/es/input/TextArea";
+import { TimePicker, DatePicker } from "antd";
+import dayjs from 'dayjs'; // Import dayjs for date manipulation
+import { ReportItemInputs, TItemType } from "@/types";
+import ReactHookTimePicker from "@/components/form/ReactHookTimePicker";
+import ReactHookDatePicker from "@/components/form/ReactHookDatePicker";
 
-export default function ReportItem({ params }: { params: { type: string } }) {
-    console.log(params)
+interface ReportItemProps {
+    params: { type: "lost" | "found" };
+}
 
-    const onChange: TimePickerProps['onChange'] = (time, timeString) => {
-        console.log(time, timeString);
+export default function ReportItem({ params }: ReportItemProps) {
+    console.log(params?.type)
+    const { control, handleSubmit } = useForm<ReportItemInputs>({
+        defaultValues: {
+            itemType: params?.type?.toLocaleUpperCase() as TItemType
+        }
+    });
+
+    const onSubmit: SubmitHandler<ReportItemInputs> = async (data) => {
+        try {
+            console.log(data)
+        } catch (error) {
+            console.log(error)
+        }
     };
-
 
     return (
         <section className="pb-14">
@@ -20,40 +39,42 @@ export default function ReportItem({ params }: { params: { type: string } }) {
                 <div className="mt-8">
                     <CloudinaryWidget />
                 </div>
-                <form className="mt-5">
+                <Form onFinish={handleSubmit(onSubmit)} className="mt-5">
                     <div className="grid grid-cols-12 gap-6 mt-4">
-                        <div className="col-span-6">
-                            <Input size="large" placeholder="What was Lost" className="w-full" />
+                        <div className="col-span-6 -mb-8">
+                            <ReactHookInput control={control} name="name" placeholder="What was Lost" />
                         </div>
                         <div className="col-span-6">
-                            <TimePicker size="large" use12Hours format="h:mm a" onChange={onChange} placeholder="Time Lost" className="w-full" />
+                            <ReactHookTimePicker name="time" control={control} placeholder="Time Lost" />
                         </div>
                         <div className="col-span-6">
-                            <DatePicker size="large" placeholder="Date Lost" onChange={onChange} className="w-full" />
+                            <ReactHookDatePicker name="date" control={control} placeholder="Date Lost" />
                         </div>
                         <div className="col-span-6">
-                            <SelectCategoryInput />
+                            <SelectCategoryInput control={control} />
                         </div>
                         <div className="col-span-12">
-                            <TextArea
-                                // value={value}
-                                // onChange={(e) => setValue(e.target.value)}
-                                placeholder="Location"
-                                autoSize={{ minRows: 3, maxRows: 5 }}
-                            />
+                            <Form.Item>
+                                <Controller
+                                    name="description"
+                                    control={control}
+                                    render={({ field }) =>
+                                        <TextArea {...field} size="large" placeholder="Location"
+                                            autoSize={{ minRows: 3, maxRows: 5 }} />}
+                                />
+                            </Form.Item>
                         </div>
-                        <h2 className="col-span-12 capitalize text-3xl font-bold">Contact Information</h2>
+                        <h2 className="col-span-12 capitalize text-3xl font-bold mt-4">Contact Information</h2>
                         <div className="col-span-6">
-                            <Input size="large" placeholder="Enter email" className="w-full" />
+                            <ReactHookInput control={control} name="contact.email" placeholder="Enter email" />
                         </div>
                         <div className="col-span-6">
-                            <Input size="large" placeholder="Enter phone" className="w-full" />
+                            <ReactHookInput control={control} name="contact.phone" placeholder="Enter phone" />
                         </div>
                     </div>
-                    <Button type="primary" size="large" className="mt-5">Submit</Button>
-                </form>
-
+                    <Button htmlType="submit" type="primary" size="large" className="mt-5">Submit</Button>
+                </Form>
             </div>
         </section>
-    )
+    );
 }

@@ -7,7 +7,7 @@ import { userLoggedOut } from '../auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
-    credentials: 'include',
+    // credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = (getState() as RootState).auth.accessToken;
 
@@ -30,7 +30,7 @@ export const apiSlice = createApi({
         }
         return result;
     },
-    tagTypes: ["books", "author", "category", "publisher", "series", "sale", "carts", "creator-book"],
+    tagTypes: ["categories"],
 
     endpoints: () => ({}),
 });
