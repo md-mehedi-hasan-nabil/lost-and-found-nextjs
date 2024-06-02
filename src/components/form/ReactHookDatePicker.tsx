@@ -3,14 +3,14 @@ import { SizeType } from "antd/es/config-provider/SizeContext";
 import dayjs from "dayjs";
 import { Control, Controller } from "react-hook-form";
 
-interface ReactHookTimePickerProps {
+interface ReactHookDatePickerProps {
     name: string;
     placeholder: string;
     size?: SizeType;
     control: Control<any>;
 }
 
-export default function ReactHookDatePicker({ name, control, placeholder = "" }: ReactHookTimePickerProps) {
+export default function ReactHookDatePicker({ name, control, placeholder = "", size = "large" }: ReactHookDatePickerProps) {
     return (
         <Controller
             name={name}
@@ -18,17 +18,15 @@ export default function ReactHookDatePicker({ name, control, placeholder = "" }:
             render={({ field }) => (
                 <DatePicker
                     {...field}
-                    size="large"
-                    use12Hours
-                    format="h:mm a"
-                    onChange={(time) => {
-                        const formattedTime = time.format("h:mm a").toUpperCase();
-                        console.log(time, formattedTime);
-                        field.onChange(formattedTime);
+                    size={size}
+                    format="MM/DD/YYYY"
+                    onChange={(date) => {
+                        const formattedDate = date ? date.format("MM/DD/YYYY") : null;
+                        field.onChange(formattedDate);
                     }}
                     placeholder={placeholder}
                     className="w-full"
-                    value={field.value ? dayjs(field.value, "h:mm a") : null}
+                    value={field.value ? dayjs(field.value, "MM/DD/YYYY") : null}
                 />
             )}
         />

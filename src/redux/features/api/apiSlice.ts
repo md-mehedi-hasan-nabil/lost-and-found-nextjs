@@ -4,12 +4,15 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../../store/store';
 import { userLoggedOut } from '../auth/authSlice';
+import { getFromLocalStorage } from '@/utils/localstorage';
+import { authKey } from '@/contants/authKey';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
     // credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
-        const token = (getState() as RootState).auth.accessToken;
+        // const token = (getState() as RootState).auth.accessToken;
+        const token = getFromLocalStorage(authKey)
 
         if (token) {
             headers.set('authorization', `${token}`);

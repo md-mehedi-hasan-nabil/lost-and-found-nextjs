@@ -1,32 +1,44 @@
 "use client"
 
-import { Form, Input, Button } from "antd";
+import { Form, Button, message } from "antd";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import ReactHookInput from "@/components/form/ReactHookInput";
 import SelectCategoryInput from "@/components/SelectCategoryInput";
 import CloudinaryWidget from "@/components/cloudinary/CloudinaryWidget";
 import TextArea from "antd/es/input/TextArea";
-import { TimePicker, DatePicker } from "antd";
-import dayjs from 'dayjs'; // Import dayjs for date manipulation
 import { ReportItemInputs, TItemType } from "@/types";
 import ReactHookTimePicker from "@/components/form/ReactHookTimePicker";
 import ReactHookDatePicker from "@/components/form/ReactHookDatePicker";
+import { useEffect, useState } from "react";
+import { useCreateItemMutation } from "@/redux/features/item/itemApi";
 
 interface ReportItemProps {
     params: { type: "lost" | "found" };
 }
 
 export default function ReportItem({ params }: ReportItemProps) {
-    console.log(params?.type)
-    const { control, handleSubmit } = useForm<ReportItemInputs>({
+    const [createItem, { isSuccess, isLoading }] = useCreateItemMutation()
+    const [image_url, setImage_url] = useState<string>("")
+
+    const { control, handleSubmit, reset } = useForm<ReportItemInputs>({
         defaultValues: {
             itemType: params?.type?.toLocaleUpperCase() as TItemType
         }
     });
 
+    useEffect(() => {
+        if (isSuccess) {
+            message.success(`Your ${params.type} item submit successfull.`)
+            reset()
+        }
+    }, [isSuccess, reset, params])
+
     const onSubmit: SubmitHandler<ReportItemInputs> = async (data) => {
         try {
-            console.log(data)
+            createItem({
+                ...data,
+                image_url
+            })
         } catch (error) {
             console.log(error)
         }
@@ -37,7 +49,7 @@ export default function ReportItem({ params }: ReportItemProps) {
             <div className="container mt-10">
                 <h2 className="capitalize text-3xl font-bold">Submit {params.type} Property</h2>
                 <div className="mt-8">
-                    <CloudinaryWidget />
+                    <CloudinaryWidget onChange={setImage_url} />
                 </div>
                 <Form onFinish={handleSubmit(onSubmit)} className="mt-5">
                     <div className="grid grid-cols-12 gap-6 mt-4">
@@ -56,7 +68,7 @@ export default function ReportItem({ params }: ReportItemProps) {
                         <div className="col-span-12">
                             <Form.Item>
                                 <Controller
-                                    name="description"
+                                    name="location"
                                     control={control}
                                     render={({ field }) =>
                                         <TextArea {...field} size="large" placeholder="Location"
