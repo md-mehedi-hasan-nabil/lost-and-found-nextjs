@@ -30,6 +30,7 @@ export default function ReportItem({ params }: ReportItemProps) {
         if (isSuccess) {
             message.success(`Your ${params.type} item submit successfull.`)
             reset()
+            setImage_url("")
         }
     }, [isSuccess, reset, params])
 
@@ -57,15 +58,15 @@ export default function ReportItem({ params }: ReportItemProps) {
                             <ReactHookInput control={control} name="name" placeholder="What was Lost" />
                         </div>
                         <div className="col-span-6">
-                            <ReactHookTimePicker name="time" control={control} placeholder="Time Lost" />
+                            <SelectCategoryInput control={control} />
                         </div>
                         <div className="col-span-6">
                             <ReactHookDatePicker name="date" control={control} placeholder="Date Lost" />
                         </div>
                         <div className="col-span-6">
-                            <SelectCategoryInput control={control} />
+                            <ReactHookTimePicker name="time" control={control} placeholder="Time Lost" />
                         </div>
-                        <div className="col-span-12">
+                        <div className="col-span-6">
                             <Form.Item>
                                 <Controller
                                     name="location"
@@ -76,15 +77,26 @@ export default function ReportItem({ params }: ReportItemProps) {
                                 />
                             </Form.Item>
                         </div>
+                        <div className="col-span-6">
+                            <Form.Item>
+                                <Controller
+                                    name="description"
+                                    control={control}
+                                    render={({ field }) =>
+                                        <TextArea {...field} size="large" placeholder="Enter Lost item description"
+                                            autoSize={{ minRows: 3, maxRows: 5 }} />}
+                                />
+                            </Form.Item>
+                        </div>
                         <h2 className="col-span-12 capitalize text-3xl font-bold mt-4">Contact Information</h2>
                         <div className="col-span-6">
-                            <ReactHookInput control={control} name="contact.email" placeholder="Enter email" />
+                            <ReactHookInput control={control} name="contact.email" type="email" placeholder="Enter email" />
                         </div>
                         <div className="col-span-6">
                             <ReactHookInput control={control} name="contact.phone" placeholder="Enter phone" />
                         </div>
                     </div>
-                    <Button htmlType="submit" type="primary" size="large" className="mt-5">Submit</Button>
+                    <Button loading={isLoading} htmlType="submit" type="primary" size="large" className="mt-5">Submit</Button>
                 </Form>
             </div>
         </section>

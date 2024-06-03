@@ -7,16 +7,17 @@ interface ReactHookInputProps {
     placeholder: string;
     size?: SizeType;
     control: Control<any>;
+    type?: string;
 }
 
-export default function ReactHookInput({ name, placeholder, size = "large", control }: ReactHookInputProps) {
+export default function ReactHookInput({ name, placeholder, size = "large", control, type = "text" }: ReactHookInputProps) {
     return (
         <Form.Item>
             <Controller
                 name={name}
                 control={control}
                 render={({ field }) =>
-                    <Input {...field} size={size} placeholder={placeholder} />}
+                    <Input type={type} {...field} size={size} placeholder={placeholder} />}
             />
         </Form.Item>
     );

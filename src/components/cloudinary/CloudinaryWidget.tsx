@@ -10,20 +10,21 @@ interface CloudinaryWidgetProps {
 
 export default function CloudinaryWidget({ onChange }: CloudinaryWidgetProps) {
     const [resource, setResource] = useState<CloudinaryUploadWidgetResults>();
-    const [url, setUrl] = useState<string | null>()
+    const [url, setUrl] = useState<string | null>(null);
 
-    console.log(resource)
-    console.log(url)
+    // console.log(resource);
+    // console.log(url);
 
     return (
-        <CldUploadWidget signatureEndpoint="/api/sign-cloudinary-params"
+        <CldUploadWidget
+            signatureEndpoint="/api/sign-cloudinary-params"
             onSuccess={(result, { widget }) => {
                 setResource(result);
 
                 if ((result?.info as CloudinaryUploadWidgetInfo)?.secure_url) {
                     const url = (result?.info as CloudinaryUploadWidgetInfo)?.secure_url;
-                    onChange(url)
-                    setUrl(url)
+                    onChange(url);
+                    setUrl(url);
                 }
                 // widget.close();
             }}
@@ -36,7 +37,7 @@ export default function CloudinaryWidget({ onChange }: CloudinaryWidgetProps) {
                 return (
                     <div className="flex items-center justify-center w-full">
                         <label
-                            onClick={() => open()}
+                            onClick={handleOnClick}
                             className="flex flex-col items-center justify-center w-full h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
                         >
                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -63,12 +64,10 @@ export default function CloudinaryWidget({ onChange }: CloudinaryWidgetProps) {
                                 </p>
                             </div>
                         </label>
-                        {
-                            url && <Image src={url} className="rounded-2xl ml-4" width={360} height={200} alt="" />
-                        }
+                        {url && <Image src={url} className="rounded-2xl ml-4" width={360} height={200} alt="" />}
                     </div>
                 );
             }}
         </CldUploadWidget>
-    )
+    );
 }

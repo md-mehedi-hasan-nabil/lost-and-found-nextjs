@@ -1,31 +1,45 @@
 "use client"
 
-import { useGetAllCategoriesQuery } from '@/redux/features/category/categoryApi';
-import { Button, Input, Modal, Select } from 'antd';
+import { useCreateCategoryMutation, useGetAllCategoriesQuery } from '@/redux/features/category/categoryApi';
+import { Button, Input, message, Modal, Select } from 'antd';
 import { Control, Controller } from 'react-hook-form';
 import { ReportItemInputs } from '@/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function SelectCategoryInput({ control }: {
     control: Control<ReportItemInputs, any>
 }) {
+    const [createCategory, { isSuccess: isSuccessCreateCategory }] = useCreateCategoryMutation()
     const { data: categories, isSuccess: isSuccessCategories } = useGetAllCategoriesQuery(undefined);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [categoryValue, setCategoryValue] = useState<string>("");
+
+    useEffect(() => {
+        if (isSuccessCreateCategory) {
+            message.success("Category create successfull.")
+            setIsModalOpen(false);
+            setCategoryValue("")
+        }
+    }, [isSuccessCreateCategory])
 
     const showModal = () => {
         setIsModalOpen(true);
-    };
-
-    const handleOk = () => {
-        setIsModalOpen(false);
     };
 
     const handleCancel = () => {
         setIsModalOpen(false);
     };
 
-    const handleChange = (value: string) => {
-        console.log(`selected ${value}`);
+    const handleCategorySubmit = () => {
+        if (categoryValue) {
+            const obj = {
+                name: categoryValue
+            }
+
+            createCategory(obj)
+        } else {
+            message.error("Category field required.")
+        }
     };
 
     let categories_list = [];
@@ -55,11 +69,12 @@ export default function SelectCategoryInput({ control }: {
                     />
                 )}
             />
+
             <Button onClick={showModal} type="primary" size="large">
                 Add
             </Button>
-            <Modal title="Create new category" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <Input name="categoryId" size="large" placeholder="Enter category name" className="w-full" />
+            <Modal title="Create new category" open={isModalOpen} onOk={handleCategorySubmit} onCancel={handleCancel}>
+                <Input onChange={e => setCategoryValue(e.target.value)} value={categoryValue} name="name" size="large" placeholder="Enter category name" className="w-full" />
             </Modal>
         </div>
     );
