@@ -1,18 +1,16 @@
 "use client"
 
-import Sidebar from '@/components/dashboard/Sidebar';
 import React, { useState } from 'react';
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-} from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Button, Dropdown, Layout, Menu, MenuProps, theme } from 'antd';
-import { LuLayoutDashboard } from "react-icons/lu";
+import { LuLayoutDashboard, LuUserCog } from "react-icons/lu";
 import { MdManageAccounts } from 'react-icons/md';
 import Link from 'next/link';
+import { AiOutlineCarryOut } from "react-icons/ai";
+import { AiOutlineGateway } from "react-icons/ai";
+import { MdPassword } from "react-icons/md";
+import { FaRegCompass } from "react-icons/fa";
+import { TbActivity } from "react-icons/tb";
 
 const { Header, Sider, Content } = Layout;
 
@@ -35,6 +33,52 @@ const items: MenuProps['items'] = [
     }
 ];
 
+const adminItems = [
+    {
+        key: '1',
+        icon: <LuLayoutDashboard />,
+        label: <Link href="/dashboard">Dashboard</Link>,
+    },
+    {
+        key: '2',
+        icon: <LuUserCog />,
+        label: <Link href="/dashboard/user-management">User Management</Link>,
+    },
+    {
+        key: '3',
+        icon: <TbActivity />,
+        label: <Link href="/dashboard/activity-monitoring">Activity Monitoring</Link>,
+    }
+]
+
+const userItems = [
+    {
+        key: '1',
+        icon: <LuLayoutDashboard />,
+        label: <Link href="/profile">Profile</Link>,
+    },
+    {
+        key: '2',
+        icon: <AiOutlineCarryOut />,
+        label: <Link href="/lost-item">My Lost Items</Link>,
+    },
+    {
+        key: '3',
+        icon: <AiOutlineGateway />,
+        label: <Link href="/found-item">My Found Items</Link>,
+    },
+    {
+        key: '4',
+        icon: <MdManageAccounts />,
+        label: <Link href="/edit-profile">Edit Profile</Link>,
+    },
+    {
+        key: '5',
+        icon: <MdPassword />,
+        label: <Link href="/change-password">Change Password</Link>,
+    },
+]
+
 export default function DashboardLayout({ children }: {
     children: React.ReactNode;
 }) {
@@ -46,30 +90,16 @@ export default function DashboardLayout({ children }: {
     return (
         <Layout className='h-screen'>
             <Sider trigger={null} collapsible collapsed={collapsed}>
-                <div className='my-8'>
-                    <p className='text-white text-center'>LOGO</p>
+                <div className='my-8 flex justify-center items-center'>
+                    <Link href="/">
+                        <FaRegCompass className='text-6xl text-white' />
+                    </Link>
                 </div>
                 <Menu
                     theme="dark"
                     mode="inline"
                     defaultSelectedKeys={['1']}
-                    items={[
-                        {
-                            key: '1',
-                            icon: <LuLayoutDashboard />,
-                            label: 'Dashboard',
-                        },
-                        {
-                            key: '2',
-                            icon: <VideoCameraOutlined />,
-                            label: 'All lost Request',
-                        },
-                        {
-                            key: '3',
-                            icon: <MdManageAccounts />,
-                            label: 'Account',
-                        },
-                    ]}
+                    items={adminItems}
                 />
             </Sider>
             <Layout>
