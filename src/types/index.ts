@@ -46,7 +46,7 @@ export interface IItem {
   image_url?: string;
   createdAt: string;
   updatedAt: string;
-  category: Category;
+  category: ICategory;
   user: {
     id: string;
     name: string;
