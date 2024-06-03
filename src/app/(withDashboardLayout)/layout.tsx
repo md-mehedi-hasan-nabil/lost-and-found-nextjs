@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Button, Dropdown, Layout, Menu, MenuProps, theme } from 'antd';
-import { LuLayoutDashboard, LuUserCog } from "react-icons/lu";
+import { LuBaggageClaim, LuLayoutDashboard, LuUserCog } from "react-icons/lu";
 import { MdManageAccounts } from 'react-icons/md';
 import Link from 'next/link';
 import { AiOutlineCarryOut } from "react-icons/ai";
@@ -59,18 +59,18 @@ const userItems = [
     },
     {
         key: '2',
+        icon: <LuBaggageClaim />,
+        label: <Link href="/claim-requests">My Claim Requests</Link>,
+    },
+    {
+        key: '3',
         icon: <AiOutlineCarryOut />,
         label: <Link href="/lost-item">My Lost Items</Link>,
     },
     {
-        key: '3',
+        key: '4',
         icon: <AiOutlineGateway />,
         label: <Link href="/found-item">My Found Items</Link>,
-    },
-    {
-        key: '4',
-        icon: <MdManageAccounts />,
-        label: <Link href="/edit-profile">Edit Profile</Link>,
     },
     {
         key: '5',
@@ -99,7 +99,7 @@ export default function DashboardLayout({ children }: {
                     theme="dark"
                     mode="inline"
                     defaultSelectedKeys={['1']}
-                    items={adminItems}
+                    items={userItems}
                 />
             </Sider>
             <Layout>
