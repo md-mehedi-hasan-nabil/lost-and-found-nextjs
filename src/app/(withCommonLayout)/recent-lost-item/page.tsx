@@ -28,7 +28,7 @@ export default async function LostItemsPage() {
     let content;
 
     if (data && data?.length > 0) {
-        content = data.map((item: IItem) => <ItemCard key={item.id} item={item} />)
+        content = data.map((item: IItem) => <ItemCard key={item.id} item={item} type="lost" />)
     } else {
         content = <p className="col-span-12 mb-5">No item found.</p>
     }

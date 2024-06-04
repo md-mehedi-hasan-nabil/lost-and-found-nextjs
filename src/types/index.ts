@@ -41,7 +41,7 @@ export interface IItem {
   date: string;
   time: string;
   itemType: 'LOST' | 'FOUND';
-  status: 'LOST' | 'FOUND';
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
   contactId: string;
   image_url?: string;
   createdAt: string;

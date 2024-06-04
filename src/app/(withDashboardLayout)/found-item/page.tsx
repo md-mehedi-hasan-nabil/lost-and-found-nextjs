@@ -11,8 +11,8 @@ export default function FoundItemPage() {
 
     if (isLoading) {
         content = <Spin />
-    } else if (foundItems && foundItems?.data?.length > 0) {
-        content = foundItems?.data?.map((item: IItem) => <ItemCard key={item.id} item={item} />)
+    } else if (isSuccess && foundItems && foundItems?.data?.length > 0) {
+        content = foundItems?.data?.map((item: IItem) => <ItemCard type="found" key={item.id} item={item} />)
     } else {
         content = <p className="col-span-12 mb-5">No item found.</p>
     }

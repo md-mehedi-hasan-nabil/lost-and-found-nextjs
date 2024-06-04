@@ -55,16 +55,16 @@ export default function ReportItem({ params }: ReportItemProps) {
                 <Form onFinish={handleSubmit(onSubmit)} className="mt-5">
                     <div className="grid grid-cols-12 gap-6 mt-4">
                         <div className="col-span-6 -mb-8">
-                            <ReactHookInput control={control} name="name" placeholder="What was Lost" />
+                            <ReactHookInput control={control} name="name" placeholder={`What was ${params?.type}`} />
                         </div>
                         <div className="col-span-6">
                             <SelectCategoryInput control={control} />
                         </div>
                         <div className="col-span-6">
-                            <ReactHookDatePicker name="date" control={control} placeholder="Date Lost" />
+                            <ReactHookDatePicker name="date" control={control} placeholder={`Date ${params?.type}`} />
                         </div>
                         <div className="col-span-6">
-                            <ReactHookTimePicker name="time" control={control} placeholder="Time Lost" />
+                            <ReactHookTimePicker name="time" control={control} placeholder={`Time ${params?.type}`} />
                         </div>
                         <div className="col-span-6">
                             <Form.Item>
@@ -83,7 +83,7 @@ export default function ReportItem({ params }: ReportItemProps) {
                                     name="description"
                                     control={control}
                                     render={({ field }) =>
-                                        <TextArea {...field} size="large" placeholder="Enter Lost item description"
+                                        <TextArea {...field} size="large" placeholder={`Enter ${params?.type} item description`}
                                             autoSize={{ minRows: 3, maxRows: 5 }} />}
                                 />
                             </Form.Item>
