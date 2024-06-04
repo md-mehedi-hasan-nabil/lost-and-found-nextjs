@@ -1,11 +1,7 @@
 import ItemCard from "@/components/ItemCard"
+import LostFoundActionBar from "@/components/LostFoundActionBar"
 import { IItem } from "@/types"
-import { Button } from "antd"
-import moment from "moment"
-import { StaticImport } from "next/dist/shared/lib/get-img-props"
-import Image from "next/image"
-import Link from "next/link"
-import { AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from "react"
+import { Select } from "antd"
 
 async function getAllLostItems(type: "lost" | "found") {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items?type=${type}`, {
@@ -37,11 +33,12 @@ export default async function LostItemsPage() {
         <section>
             <div className='container my-10'>
                 <h2 className='text-3xl font-semibold mb-8 text-center'>Recent Lost Items </h2>
+                <LostFoundActionBar />
 
                 <div className='grid grid-cols-12 gap-6 mt-6'>
                     {content}
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
