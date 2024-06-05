@@ -17,7 +17,7 @@ export default function RecentLostItems({ itemCount = 2 }: {
         content = content = (
             <>
                 {[...Array(4)].map((_, index) => (
-                    <Skeleton key={index} className="col-span-4 my-2 p-4" />
+                    <Skeleton key={index} className="col-span-12 md:col-span-4 my-2 p-4" />
                 ))}
             </>
         );
