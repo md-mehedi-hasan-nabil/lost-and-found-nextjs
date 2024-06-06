@@ -2,6 +2,11 @@ import { apiSlice } from "../api/apiSlice";
 
 export const claimApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        getAllClaims: builder.query({
+            query: (data) => ({
+                url: "/claims",
+            })
+        }),
         createClaims: builder.mutation({
             query: (data) => ({
                 url: "/claims",
@@ -12,4 +17,4 @@ export const claimApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useCreateClaimsMutation } = claimApi;
+export const {useGetAllClaimsQuery,  useCreateClaimsMutation } = claimApi;

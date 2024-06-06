@@ -31,8 +31,10 @@ export default function LostItemDetails({ params }: { params: { itemId: string }
     useEffect(() => {
         if (isSuccessCreateClaim) {
             message.success("Claim resuest send successful.")
+            reset()
+            setIsModalOpen(false);
         }
-    }, [isSuccessCreateClaim])
+    }, [isSuccessCreateClaim, reset])
 
     useEffect(() => {
         if (isErrorCreateClaim) {
@@ -44,10 +46,6 @@ export default function LostItemDetails({ params }: { params: { itemId: string }
         setIsModalOpen(true);
     };
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-
     const handleCancel = () => {
         setIsModalOpen(false);
     };
@@ -55,10 +53,10 @@ export default function LostItemDetails({ params }: { params: { itemId: string }
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
         try {
-            console.log(data)
             createClaim({
                 ...data,
-                itemId: params.itemId
+                itemId: params.itemId,
+                lostDate: new Date(data.lostDate)
             })
 
         } catch (error) {

@@ -10,7 +10,7 @@ export default function AboutPage() {
     return (
         <section className="container py-10">
             <div className="grid grid-cols-12 gap-8 pb-6">
-                <div className="col-span-12 md:col-span-6">
+                <div className="col-span-12 lg:col-span-6">
                     <h3 className="text-2xl font-semibold">
                         Welcome to TrackReclaim,
                     </h3>
@@ -43,7 +43,7 @@ export default function AboutPage() {
                         </div>
                     </div>
                 </div>
-                <div className="col-span-12 md:col-span-6 flex justify-end">
+                <div className="col-span-12 lg:col-span-6 flex justify-center lg:justify-end">
                     <Image width={500} height={500} src={aboutImage} className="rounded-lg" alt="about" />
                 </div>
             </div>

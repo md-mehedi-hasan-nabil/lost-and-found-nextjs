@@ -11,6 +11,7 @@ import { AiOutlineGateway } from "react-icons/ai";
 import { MdPassword } from "react-icons/md";
 import { FaRegCompass } from "react-icons/fa";
 import { TbActivity } from "react-icons/tb";
+import { getUserInfo } from '@/services/auth.service';
 
 const { Header, Sider, Content } = Layout;
 
@@ -79,6 +80,18 @@ const userItems = [
     },
 ]
 
+const getGreeting = () => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour < 12) {
+        return 'Good Morning';
+    } else if (currentHour < 18) {
+        return 'Good Afternoon';
+    } else {
+        return 'Good Evening';
+    }
+};
+
 export default function DashboardLayout({ children }: {
     children: React.ReactNode;
 }) {
@@ -86,6 +99,7 @@ export default function DashboardLayout({ children }: {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
+
 
     return (
         <Layout className='h-screen'>
@@ -115,7 +129,7 @@ export default function DashboardLayout({ children }: {
                                 height: 64,
                             }}
                         />
-                        <h2 className='text-lg font-semibold'>Good Morning</h2>
+                        <h2 className='text-lg font-semibold'>{getGreeting()}</h2>
                     </div>
                     <div className='pr-6'>
                         <Dropdown menu={{ items }} placement="bottomRight" arrow>

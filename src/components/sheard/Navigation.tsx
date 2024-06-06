@@ -1,6 +1,6 @@
 "use client";
 
-import {  MenuProps } from 'antd';
+import { MenuProps } from 'antd';
 import Link from 'next/link';
 import logo from "@/assets/logo.svg"
 import Image from 'next/image';
