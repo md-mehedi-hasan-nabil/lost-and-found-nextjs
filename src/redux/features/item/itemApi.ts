@@ -16,6 +16,24 @@ export const itemApi = apiSlice.injectEndpoints({
             },
             providesTags: ["items"]
         }),
+        getItem: builder.query({
+            query: (data: {
+                type: "lost" | "found" | undefined,
+                itemId: string
+            }) => {
+                const { itemId, type } = data
+                let url = `/items/${itemId}`
+
+                if (type) {
+                    url += `?type=${type}`
+                }
+
+                return {
+                    url,
+                }
+            },
+            providesTags: ["item"]
+        }),
         createItem: builder.mutation({
             query: (data) => ({
                 url: "/items",
@@ -26,4 +44,4 @@ export const itemApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useGetAllItemsQuery, useCreateItemMutation } = itemApi;
+export const { useGetAllItemsQuery, useCreateItemMutation, useGetItemQuery } = itemApi;
