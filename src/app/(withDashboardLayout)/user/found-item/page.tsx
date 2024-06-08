@@ -19,7 +19,7 @@ export default function FoundItemPage() {
 
     return (
         <section>
-            <h3 className='mb-6 text-3xl font-semibold'>My found items</h3>
+            <h3 className='mb-6 text-3xl font-semibold'>Found items</h3>
             <div className='grid grid-cols-12 gap-6 mt-6'>
                 {content}
             </div>

@@ -12,7 +12,7 @@ export default function FoundItemPage() {
     if (isLoading) {
         content = <Spin />
     } else if (isSuccess && foundItems && foundItems?.data?.length > 0) {
-        content = foundItems?.data?.map((item: IItem) => <ItemCard type="found" key={item.id} item={item} />)
+        content = foundItems?.data?.map((item: IItem) => <ItemCard type="found" key={item.id} item={item} actionBar />)
     } else {
         content = <p className="col-span-12 mb-5">No item found.</p>
     }

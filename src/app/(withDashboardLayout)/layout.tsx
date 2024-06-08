@@ -13,27 +13,8 @@ import { TbActivity } from "react-icons/tb";
 import { getUserInfo } from '@/services/auth.service';
 import dynamic from 'next/dynamic';
 const DashboardSidebarMenu = dynamic(() => import('@/components/dashboard/DashboardSidebarMenu'), { ssr: false })
-
+const AuthButton = dynamic(() => import('@/components/AuthButton'), { ssr: false })
 const { Header, Sider, Content } = Layout;
-
-const items: MenuProps['items'] = [
-    {
-        key: '1',
-        label: (
-            <Link href="/profile">
-                Profile
-            </Link>
-        ),
-    },
-    {
-        key: '2',
-        label: (
-            <button>
-                Logout
-            </button>
-        ),
-    }
-];
 
 const adminItems = [
     {
@@ -150,9 +131,7 @@ export default function DashboardLayout({ children }: {
                         <h2 className='text-lg font-semibold'>{getGreeting()}</h2>
                     </div>
                     <div className='pr-6'>
-                        <Dropdown menu={{ items }} placement="bottomRight" arrow>
-                            <Avatar icon={<UserOutlined />} />
-                        </Dropdown>
+                        <AuthButton />
                     </div>
                 </Header>
                 <Content

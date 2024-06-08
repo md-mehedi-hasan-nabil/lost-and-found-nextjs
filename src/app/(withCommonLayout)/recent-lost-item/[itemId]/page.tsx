@@ -17,14 +17,13 @@ type Inputs = {
 
 export default function LostItemDetails({ params }: { params: { itemId: string } }) {
     const [createClaim, { isSuccess: isSuccessCreateClaim, isLoading: isLoadingCreateClaim, isError: isErrorCreateClaim }] = useCreateClaimsMutation()
+    
     const { data: item, isLoading: isLoadingFetchItem, isSuccess: isSuccessFetchItem, isError: isErrorFetchItem } = useGetItemQuery({
         itemId: params.itemId,
         type: "lost"
     })
 
-
-    const { control, handleSubmit, reset } = useForm<Inputs>({
-    });
+    const { control, handleSubmit, reset } = useForm<Inputs>();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -112,7 +111,7 @@ export default function LostItemDetails({ params }: { params: { itemId: string }
                                     name="distinguishingFeatures"
                                     control={control}
                                     render={({ field }) =>
-                                        <TextArea {...field} size="large" placeholder="LocaWrite Distinguishing Featurestion"
+                                        <TextArea {...field} size="large" placeholder="LocalWrite Distinguishing Featurestion"
                                             autoSize={{ minRows: 3, maxRows: 5 }} />}
                                 />
                             </Form.Item>

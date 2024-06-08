@@ -1,20 +1,22 @@
 "use client"
 
 import ItemCard from "@/components/ItemCard";
-import { useGetAllItemsQuery } from "@/redux/features/item/itemApi"
+import { useGetMyAllItemsQuery } from "@/redux/features/item/itemApi"
 import { IItem } from "@/types";
 import { Spin } from "antd";
 
 export default function LostItemPage() {
-    const { data: foundItems, isSuccess, isLoading } = useGetAllItemsQuery("lost")
+    const { data: foundItems, isSuccess, isLoading } = useGetMyAllItemsQuery("lost")
     let content;
 
     if (isLoading) {
         content = <Spin />
-    } else if (foundItems && foundItems?.data?.length > 0) {
+    } else if (isSuccess && foundItems?.data?.length > 0) {
         content = foundItems?.data?.map((item: IItem) => <ItemCard type="lost" key={item.id} item={item} />)
-    } else {
+    } else if (isSuccess && foundItems?.data?.length === 0) {
         content = <p className="col-span-12 mb-5">No item found.</p>
+    } else {
+        content = <p className="col-span-12 mb-5">Something was wrong.</p>
     }
 
     return (

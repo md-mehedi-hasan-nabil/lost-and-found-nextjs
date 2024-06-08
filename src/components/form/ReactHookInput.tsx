@@ -17,7 +17,7 @@ export default function ReactHookInput({ name, placeholder, size = "large", cont
                 name={name}
                 control={control}
                 render={({ field }) =>
-                    <Input type={type} {...field} size={size} placeholder={placeholder} />}
+                    <Input type={type} {...field} size={size} placeholder={placeholder} required />}
             />
         </Form.Item>
     );

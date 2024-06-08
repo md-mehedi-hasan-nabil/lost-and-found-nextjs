@@ -23,6 +23,7 @@ export default function AuthButton() {
         removeUser()
         router.refresh()
         removeCookies(authKey)
+        window?.location?.replace("/login");
     }
 
     const userItems: MenuProps['items'] = [

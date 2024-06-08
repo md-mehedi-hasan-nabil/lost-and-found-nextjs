@@ -30,10 +30,14 @@ export default function LoginPage() {
     try {
       const result = await loginUser(data);
 
+      console.log(result)
+
       if (result?.success && result?.data?.token) {
         storeUserInfo(result.data.token)
         message.success('Login successful');
         router.push("/")
+      } else {
+        message.error(result?.message ? result?.message : "Login Failed")
       }
     } catch (error) {
       console.log(error)

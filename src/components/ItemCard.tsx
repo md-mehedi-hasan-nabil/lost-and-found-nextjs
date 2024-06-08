@@ -1,15 +1,43 @@
+import { useUpdateItemStatusMutation } from "@/redux/features/item/itemApi";
 import { IItem } from "@/types";
-import { Badge, Button } from "antd";
+import { Badge, Button, message, Select } from "antd";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 interface ItemCardProps {
     item: IItem,
-    type: "lost" | "found"
+    type: "lost" | "found",
+    actionBar?: boolean
 }
 
-export default function ItemCard({ item, type }: ItemCardProps) {
+export default function ItemCard({ item, type, actionBar = false }: ItemCardProps) {
+    const [updateItemStatus, { isSuccess, isError }] = useUpdateItemStatusMutation()
+
+    const handleChange = (value: string) => {
+        if (value && item?.id) {
+            updateItemStatus({
+                itemId: item.id,
+                body: {
+                    status: value
+                }
+            })
+        }
+    };
+
+    useEffect(() => {
+        if (isSuccess) {
+            message.success("Status update successful")
+        }
+    }, [isSuccess])
+
+    useEffect(() => {
+        if (isError) {
+            message.error("Status update failed")
+        }
+    }, [isError])
+
     const content = <div className="w-full grid grid-cols-12 gap-4 bg-white border border-gray-200 rounded-lg shadow ">
         {item?.image_url && <div className="col-span-4">
             <Image
@@ -27,6 +55,21 @@ export default function ItemCard({ item, type }: ItemCardProps) {
             <p className="text-lg line-clamp-1 mt-2">{item.description}</p>
             <p className="text-base line-clamp-1 mt-2"><b>Location: </b><i>{item.location}</i></p>
             <p className="mt-1"><b className="capitalize">{type} Date:</b> {moment(item.date, "YYYYMMDD").fromNow()}</p>
+
+            {
+                actionBar && <div className="mt-5">
+                    <Select
+                        size="large"
+                        defaultValue={item.status}
+                        onChange={handleChange}
+                        options={[
+                            { value: 'PENDING', label: 'PENDING' },
+                            { value: 'APPROVED', label: 'APPROVED' },
+                            { value: 'REJECTED', label: 'REJECTED' }
+                        ]}
+                    />
+                </div>
+            }
 
             <div className="mt-4">
                 <Link href={`/recent-lost-item/${item.id}`} >

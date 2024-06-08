@@ -16,6 +16,20 @@ export const itemApi = apiSlice.injectEndpoints({
             },
             providesTags: ["items"]
         }),
+        getMyAllItems: builder.query({
+            query: (type: "lost" | "found" | undefined) => {
+                let url = "/items/my-items"
+
+                if (type) {
+                    url += `?type=${type}`
+                }
+
+                return {
+                    url,
+                }
+            },
+            providesTags: ["my-items"]
+        }),
         getItem: builder.query({
             query: (data: {
                 type: "lost" | "found" | undefined,
@@ -39,9 +53,24 @@ export const itemApi = apiSlice.injectEndpoints({
                 url: "/items",
                 method: "POST",
                 body: data,
-            })
+            }),
+            invalidatesTags: ["items"]
+        }),
+        updateItemStatus: builder.mutation({
+            query: (data) => ({
+                url: `/items/${data.itemId}`,
+                method: "PATCH",
+                body: data.body,
+            }),
+            invalidatesTags: ["items"]
         }),
     }),
 });
 
-export const { useGetAllItemsQuery, useCreateItemMutation, useGetItemQuery } = itemApi;
+export const {
+    useGetAllItemsQuery,
+    useGetMyAllItemsQuery,
+    useCreateItemMutation,
+    useGetItemQuery,
+    useUpdateItemStatusMutation
+} = itemApi;

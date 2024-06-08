@@ -5,16 +5,18 @@ export const claimApi = apiSlice.injectEndpoints({
         getAllClaims: builder.query({
             query: (data) => ({
                 url: "/claims",
-            })
+            }),
+            providesTags: ["claims"]
         }),
         createClaims: builder.mutation({
             query: (data) => ({
                 url: "/claims",
                 method: "POST",
                 body: data,
-            })
+            }),
+            invalidatesTags: ["claims"]
         }),
     }),
 });
 
-export const {useGetAllClaimsQuery,  useCreateClaimsMutation } = claimApi;
+export const { useGetAllClaimsQuery, useCreateClaimsMutation } = claimApi;
