@@ -6,6 +6,7 @@ import { RootState } from '../../store/store';
 import { userLoggedOut } from '../auth/authSlice';
 import { getFromLocalStorage } from '@/utils/localstorage';
 import { authKey } from '@/contants/authKey';
+import { redirect } from 'next/navigation';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
@@ -30,7 +31,9 @@ export const apiSlice = createApi({
         if (result?.error?.status === 401) {
             api.dispatch(userLoggedOut());
             localStorage.clear();
+            // window?.location.replace("/login")
         }
+
         return result;
     },
     tagTypes: ["categories", "profile", "items", "item"],

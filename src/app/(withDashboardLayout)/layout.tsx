@@ -1,10 +1,9 @@
 "use client"
 
-import React, { useState } from 'react';
-import { MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Dropdown, Layout, Menu, MenuProps, theme } from 'antd';
+import React, { Suspense, useState } from 'react';
+import { AppstoreOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Button, Dropdown, Layout, Menu, MenuProps, Spin, theme } from 'antd';
 import { LuBaggageClaim, LuLayoutDashboard, LuUserCog } from "react-icons/lu";
-import { MdManageAccounts } from 'react-icons/md';
 import Link from 'next/link';
 import { AiOutlineCarryOut } from "react-icons/ai";
 import { AiOutlineGateway } from "react-icons/ai";
@@ -12,6 +11,8 @@ import { MdPassword } from "react-icons/md";
 import { FaRegCompass } from "react-icons/fa";
 import { TbActivity } from "react-icons/tb";
 import { getUserInfo } from '@/services/auth.service';
+import dynamic from 'next/dynamic';
+const DashboardSidebarMenu = dynamic(() => import('@/components/dashboard/DashboardSidebarMenu'), { ssr: false })
 
 const { Header, Sider, Content } = Layout;
 
@@ -38,18 +39,36 @@ const adminItems = [
     {
         key: '1',
         icon: <LuLayoutDashboard />,
-        label: <Link href="/dashboard">Dashboard</Link>,
+        label: <Link href="/admin">Dashboard</Link>,
     },
     {
         key: '2',
-        icon: <LuUserCog />,
-        label: <Link href="/dashboard/user-management">User Management</Link>,
+        icon: <LuLayoutDashboard />,
+        label: <Link href="/profile">Profile</Link>,
     },
     {
         key: '3',
+        icon: <LuUserCog />,
+        label: <Link href="/admin/user-management">User Management</Link>,
+    },
+    {
+        key: '4',
+        label: 'Activity Monitoring',
         icon: <TbActivity />,
-        label: <Link href="/dashboard/activity-monitoring">Activity Monitoring</Link>,
-    }
+        children: [
+            {
+                key: '5',
+                icon: <AiOutlineCarryOut />,
+                label: <Link href="/admin/lost-item">Lost Items</Link>,
+            },
+            {
+                key: '6',
+                icon: <AiOutlineGateway />,
+                label: <Link href="/admin/found-item">Found Items</Link>,
+            },
+        ],
+    },
+
 ]
 
 const userItems = [
@@ -100,6 +119,7 @@ export default function DashboardLayout({ children }: {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
+    const user = getUserInfo()
 
     return (
         <Layout className='h-screen'>
@@ -109,15 +129,13 @@ export default function DashboardLayout({ children }: {
                         <FaRegCompass className='text-6xl text-white' />
                     </Link>
                 </div>
-                <Menu
-                    theme="dark"
-                    mode="inline"
-                    defaultSelectedKeys={['1']}
-                    items={userItems}
-                />
+                <Suspense fallback={<Spin />}>
+                    <DashboardSidebarMenu />
+                </Suspense>
             </Sider>
             <Layout>
-                <Header className='flex justify-between items-center' style={{ padding: 0, background: colorBgContainer }}>
+                <Header className='flex justify-between items-center'
+                    style={{ padding: 0, background: colorBgContainer }}>
                     <div className='flex items-center gap-6'>
                         <Button
                             type="text"

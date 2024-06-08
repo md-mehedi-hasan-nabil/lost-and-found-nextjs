@@ -21,8 +21,8 @@ export default function LoginPage() {
   const router = useRouter()
   const { control, handleSubmit } = useForm<ILoginInput>({
     defaultValues: {
-      email: "",
-      password: ""
+      email: "mehedi@gmail.com",
+      password: "123456789"
     }
   })
 

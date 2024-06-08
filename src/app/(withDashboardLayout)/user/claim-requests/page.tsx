@@ -1,7 +1,7 @@
 "use client"
 
 import { useGetAllClaimsQuery } from '@/redux/features/claim/claim.Api';
-import { Skeleton, Space, Table, Tag } from 'antd';
+import { Skeleton, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 
 interface ClaimItem {

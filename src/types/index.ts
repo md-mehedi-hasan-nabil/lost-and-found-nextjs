@@ -53,3 +53,11 @@ export interface IItem {
     email: string;
   };
 }
+
+export interface AuthUser {
+  email: string;
+  exp: number;
+  iat: number;
+  role: "USER" | "ADMIN"
+  userId: string
+}

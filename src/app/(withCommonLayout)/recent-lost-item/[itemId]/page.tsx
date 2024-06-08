@@ -75,14 +75,16 @@ export default function LostItemDetails({ params }: { params: { itemId: string }
             {image_url && <div className="col-span-4">
                 <Image width={500} height={500} src={image_url} className="rounded-lg" alt={name} />
             </div>}
-            <div className="col-span-8">
+            <div className="col-span-8 bg-slate-100 rounded-lg">
                 <Badge.Ribbon text={categoryName}>
-                    <h2 className="text-4xl font-bold capitalize">{name}</h2>
-                    <p className="text-lg font-medium capitalize text-stone-800 mt-4">{description}</p>
-                    <p className="mt-5">
-                        <b className="font-bold">Lost Location: </b> {location}
-                    </p>
-                    <Button onClick={showModal} size="middle" type="primary" className="mt-4">Request Claim</Button>
+                    <div className="p-5">
+                        <h2 className="text-4xl font-bold capitalize">{name}</h2>
+                        <p className="text-lg font-medium capitalize text-stone-800 mt-4">{description}</p>
+                        <p className="mt-5">
+                            <b className="font-bold">Lost Location: </b> {location}
+                        </p>
+                        <Button onClick={showModal} size="middle" type="primary" className="mt-4">Request Claim</Button>
+                    </div>
                 </Badge.Ribbon>
             </div>
         </>

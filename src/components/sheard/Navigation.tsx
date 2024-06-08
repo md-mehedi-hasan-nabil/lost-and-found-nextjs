@@ -1,12 +1,13 @@
 "use client";
 
-import { MenuProps } from 'antd';
 import Link from 'next/link';
 import logo from "@/assets/logo.svg"
 import Image from 'next/image';
-import { getUserInfo, isLoggedIn, removeUser } from '@/services/auth.service';
+import { removeUser } from '@/services/auth.service';
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic';
+import { authKey } from '@/contants/authKey';
+import { removeCookies } from '@/services/actions/removeCookies';
 const AuthButton = dynamic(() => import('../AuthButton'), { ssr: false })
 
 const items = [
@@ -31,26 +32,8 @@ export default function Navigation() {
     function handleLogout() {
         removeUser()
         router.refresh()
+        removeCookies(authKey)
     }
-
-    const userItems: MenuProps['items'] = [
-        {
-            key: '1',
-            label: (
-                <Link href="/profile">
-                    Profile
-                </Link>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <button onClick={handleLogout}>
-                    Logout
-                </button>
-            ),
-        }
-    ];
 
     return (
         <nav className='shadow-md sticky top-0 z-30 bg-stone-100'>
