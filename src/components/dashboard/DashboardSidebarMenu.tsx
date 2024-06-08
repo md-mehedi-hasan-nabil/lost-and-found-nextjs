@@ -23,21 +23,26 @@ const adminItems = [
     },
     {
         key: '3',
+        icon: <LuLayoutDashboard />,
+        label: <Link href="/admin/claim-requests">Claim Requests</Link>,
+    },
+    {
+        key: '4',
         icon: <LuUserCog />,
         label: <Link href="/admin/user-management">User Management</Link>,
     },
     {
-        key: '4',
+        key: '5',
         label: 'Activity Monitoring',
         icon: <TbActivity />,
         children: [
             {
-                key: '5',
+                key: '6',
                 icon: <AiOutlineCarryOut />,
                 label: <Link href="/admin/lost-item">Lost Items</Link>,
             },
             {
-                key: '6',
+                key: '7',
                 icon: <AiOutlineGateway />,
                 label: <Link href="/admin/found-item">Found Items</Link>,
             },

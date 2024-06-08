@@ -100,7 +100,7 @@ const columns: ColumnsType<IUser> = [
         dataIndex: ['profile', 'createdAt'],
         key: 'createdAt',
     },
-    {
+    { 
         title: 'Action',
         key: 'action',
         render: (_: any, record: IUser) => (
