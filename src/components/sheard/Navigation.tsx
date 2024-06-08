@@ -3,11 +3,7 @@
 import Link from 'next/link';
 import logo from "@/assets/logo.svg"
 import Image from 'next/image';
-import { removeUser } from '@/services/auth.service';
-import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic';
-import { authKey } from '@/contants/authKey';
-import { removeCookies } from '@/services/actions/removeCookies';
 const AuthButton = dynamic(() => import('../AuthButton'), { ssr: false })
 
 const items = [
@@ -27,14 +23,6 @@ const items = [
 
 
 export default function Navigation() {
-    const router = useRouter()
-
-    function handleLogout() {
-        removeUser()
-        router.refresh()
-        removeCookies(authKey)
-    }
-
     return (
         <nav className='shadow-md sticky top-0 z-30 bg-stone-100'>
             <div className='container flex justify-between items-center py-5'>

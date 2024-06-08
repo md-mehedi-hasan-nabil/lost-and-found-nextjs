@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Lost and Found System
 
-## Getting Started
+1. Clone the Project:
 
-First, run the development server:
+```bash
+git clone https://github.com/md-mehedi-hasan-nabil/lost-and-found-nextjs.git
+cd lost-and-found-nextjs
+```
+
+2. Install Dependencies:
+
+```bash
+npm install
+```
+
+3. Run the Project:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Used Technologies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. TypeScript
+2. Next.JS
+3. Ant Design
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Features:
 
-## Learn More
+1. **User Registration:** Register users with profile info.
+2. **User Login:** Authenticate users and issue JWT tokens.
+3. **Create Found Item Category:** Add new categories for found items.
+4. **Report a Found Item:** Submit details of found items.
+5. **Get Found Items:** Paginate, filter, and sort found items.
+6. **Create a Claim:** File claims for found items.
+7. **Get Claims:** Retrieve user's claims with details.
+8. **Update Claim Status:** Change status of submitted claims.
+9. **Get Profile:** Fetch user's profile information.
+10. **Update My Profile:** Modify user's profile details.
 
-To learn more about Next.js, take a look at the following resources:
+### API Url
+Link: https://lost-and-found-nextjs-seven.vercel.app
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

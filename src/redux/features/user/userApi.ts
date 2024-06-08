@@ -5,7 +5,8 @@ export const userApi = apiSlice.injectEndpoints({
         getAllUsers: builder.query({
             query: (data) => ({
                 url: "/users",
-            })
+            }),
+            providesTags: ["users"]
         }),
     }),
 });

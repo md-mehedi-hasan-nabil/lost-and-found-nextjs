@@ -1,13 +1,12 @@
 import { authKey } from '@/contants/authKey';
 import { getUserFromCookies } from '@/services/actions/getUserFromCookies';
-import { removeCookies } from '@/services/actions/removeCookies';
-import { isLoggedIn, removeUser } from '@/services/auth.service';
 import { AuthUser } from '@/types';
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Dropdown, MenuProps } from 'antd';
+import { Avatar, Button, Dropdown } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react';
+import { logoutUser } from '@/services/actions/logoutUser';
 
 export default function AuthButton() {
     const router = useRouter()
@@ -20,30 +19,8 @@ export default function AuthButton() {
     }, [])
 
     function handleLogout() {
-        removeUser()
-        router.refresh()
-        removeCookies(authKey)
-        window?.location?.replace("/login");
+        logoutUser(router)
     }
-
-    const userItems: MenuProps['items'] = [
-        {
-            key: '1',
-            label: (
-                <Link href="/user/profile">
-                    Profile
-                </Link>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <button onClick={handleLogout}>
-                    Logout
-                </button>
-            ),
-        }
-    ];
 
     return (
         <div className='flex items-center gap-2'>

@@ -1,8 +1,50 @@
 "use client"
 
+import { useUpdateUserStatusMutation } from "@/redux/features/admin/adminApi";
 import { useGetAllUsersQuery } from "@/redux/features/user/userApi"
-import { Skeleton, Table, Tag } from "antd";
+import { message, Select, Skeleton, Table, Tag } from "antd";
 import { ColumnsType } from 'antd/lib/table';
+import { useEffect } from "react";
+
+function UserStatusAction({ user }: { user: any }) {
+    const [updateUserStatus, { isSuccess, isError }] = useUpdateUserStatusMutation()
+
+    useEffect(() => {
+        if (isSuccess) {
+            message.success('User status update successful.');
+        }
+    }, [isSuccess])
+
+    useEffect(() => {
+        if (isError) {
+            message.error('User status update failed');
+        }
+    }, [isError])
+
+    const handleChange = (value: string) => {
+        if (value) {
+            updateUserStatus({
+                userId: user.id,
+                body: {
+                    status: value
+                }
+            })
+        }
+    };
+
+    return (
+        <Select
+            defaultValue={user.status}
+            size="large"
+            className="w-28"
+            onChange={handleChange}
+            options={[
+                { value: 'ACTIVATE', label: 'ACTIVATE' },
+                { value: 'DEACTIVATE', label: 'DEACTIVATE' }
+            ]}
+        />
+    )
+}
 
 interface IUser {
     id: string;
@@ -58,11 +100,17 @@ const columns: ColumnsType<IUser> = [
         dataIndex: ['profile', 'createdAt'],
         key: 'createdAt',
     },
+    {
+        title: 'Action',
+        key: 'action',
+        render: (_: any, record: IUser) => (
+            <UserStatusAction user={record} />
+        )
+    },
 ];
 
 export default function UserManagementPage() {
     const { data: users, isLoading, isSuccess } = useGetAllUsersQuery(undefined)
-
 
     if (isLoading) {
         return <Skeleton />
