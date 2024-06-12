@@ -13,7 +13,7 @@ export async function createUser(payload: IRegister) {
     }
 
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/register`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
         {
             method: "POST",
             body: JSON.stringify(data),
