@@ -23,7 +23,7 @@ export default function RecentLostItems({ itemCount = 2 }: {
         );
     } else if (isSuccess && data && data?.data?.length > 0) {
         const filterItem = data?.data.filter((item: IItem) => item.categoryId.includes(categoryId))
-            .filter((item: IItem) => (item?.description?.includes(searchKeyword) || (item?.name?.includes(searchKeyword)) || (item?.location?.includes(searchKeyword))))
+            .filter((item: IItem) => (item?.description?.includes(searchKeyword?.toLowerCase()) || (item?.name?.includes(searchKeyword?.toLowerCase())) || (item?.location?.includes(searchKeyword))))
 
         if (filterItem?.length > 0) {
             content = filterItem?.slice(0, itemCount).map((item: IItem) => <ItemCard key={item.id} item={item} type="lost" />)

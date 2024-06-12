@@ -22,6 +22,11 @@ export default function LostFoundActionBar() {
             value: category.id,
             label: category.name,
         }));
+        
+        categories_list.push({
+            value: "",
+            label: "All",
+        })
     }
 
     return (

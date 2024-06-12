@@ -12,6 +12,7 @@ import Head from 'next/head'
 import { IoKeyOutline, IoTimeOutline } from 'react-icons/io5'
 import { createUser } from '@/services/actions/createUser'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 type Inputs = {
   name: string;
@@ -26,6 +27,7 @@ type Inputs = {
 
 export default function RegisterPage() {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
 
   const { control, handleSubmit } = useForm<Inputs>({
     defaultValues: {
@@ -39,6 +41,7 @@ export default function RegisterPage() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
+      setLoading(true)
       if (data?.password === data?.confirm_password) {
 
         const { email, name, password, profile } = data
@@ -52,12 +55,18 @@ export default function RegisterPage() {
         if (result?.success) {
           message.success('Account create successful');
           router.push("/login")
+        } else {
+          message.error(result?.message ? result?.message : "Account create Failed")
         }
+        setLoading(false)
+
       } else {
+        setLoading(false)
         message.error("Password is not match")
       }
 
     } catch (error) {
+      setLoading(false)
       console.error(error)
     }
   }
@@ -73,7 +82,7 @@ export default function RegisterPage() {
             <Image src={logo} alt='logo' className='mx-auto mb-10' />
           </Link>
           <h1 className='text-xl md:text-3xl font-semibold mb-8'>Create your account</h1>
-          <Form onFinish={handleSubmit(onSubmit)} className=''>
+          <Form onFinish={handleSubmit(onSubmit)}>
 
             <Form.Item name="name">
               <Controller
@@ -142,7 +151,9 @@ export default function RegisterPage() {
             </Form.Item>
 
             <div>
-              <Button htmlType='submit' className='w-full' type='primary'>Create account</Button>
+              <Button disabled={loading} loading={loading} htmlType='submit' className='w-full' type='primary'>
+                Create account
+              </Button>
             </div>
           </Form>
 

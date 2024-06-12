@@ -16,6 +16,13 @@ export const authApi = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        changePassword: builder.mutation({
+            query: (data) => ({
+                url: "/auth/change-password",
+                method: "PATCH",
+                body: data,
+            }),
+        }),
         myProfile: builder.query({
             query: () => ({
                 url: "/my-profile",
@@ -33,4 +40,9 @@ export const authApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useMyProfileQuery, useUpdateUserInfoMutation } = authApi;
+export const { useLoginMutation,
+    useRegisterMutation,
+    useMyProfileQuery,
+    useUpdateUserInfoMutation,
+    useChangePasswordMutation
+} = authApi;

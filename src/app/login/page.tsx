@@ -11,6 +11,7 @@ import { IoKeyOutline } from 'react-icons/io5'
 import { loginUser } from '@/services/actions/loginUser'
 import { storeUserInfo } from '@/services/auth.service'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 interface ILoginInput {
   email: string;
@@ -18,6 +19,7 @@ interface ILoginInput {
 }
 
 export default function LoginPage() {
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const { control, handleSubmit } = useForm<ILoginInput>({
     defaultValues: {
@@ -28,6 +30,7 @@ export default function LoginPage() {
 
   const onSubmit: SubmitHandler<ILoginInput> = async (data) => {
     try {
+      setLoading(true)
       const result = await loginUser(data);
 
       if (result?.success && result?.data?.token) {
@@ -37,7 +40,9 @@ export default function LoginPage() {
       } else {
         message.error(result?.message ? result?.message : "Login Failed")
       }
+      setLoading(false)
     } catch (error) {
+      setLoading(false)
       console.log(error)
     }
   }
@@ -75,7 +80,9 @@ export default function LoginPage() {
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit" size="large" className='w-full'>Login</Button>
+              <Button loading={loading} disabled={loading} type="primary" htmlType="submit" size="large" className='w-full'>
+                Login
+              </Button>
             </Form.Item>
           </Form>
           <p className='mt-3'>
