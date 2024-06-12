@@ -1,8 +1,9 @@
 "use client"
 
-import About from '@/components/home/About'
+import AboutUs from '@/components/AboutUs'
 import ClientFeedback from '@/components/home/ClientFeedback'
 import Hero from '@/components/home/Hero'
+import PurposeMission from '@/components/home/PurposeMission'
 import { Button, Spin } from 'antd'
 import { Metadata } from 'next'
 import Head from 'next/head'
@@ -18,7 +19,13 @@ export default function HomePage() {
       </Head>
       <div>
         <Hero />
-        <About />
+        <div className='container py-10'>
+          <h3 className='text-center text-3xl font-bold mb-10'>About Us</h3>
+          
+          <AboutUs />
+        </div>
+
+        <PurposeMission />
 
         <div className='container py-10'>
           <h3 className='text-center text-3xl font-bold mb-10'>Recent Lost Items</h3>
